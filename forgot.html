@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wristwonders - Forgot Password</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/fevicon/fevicon.png" type="image/gif" />
+    <!-- Custom CSS -->
+    <style>
+        /* General Reset */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color:#000039;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .background {
+            position: absolute;
+            width: 430px;
+            height: 500px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .background .shape {
+            position: absolute;
+            border-radius: 50%;
+            background-size: cover;
+            width: 400px;
+            height: 400px;
+        }
+
+        .shape-blue {
+            background-image: url('images/blue.png'); /* Path to blue image */
+            left: -300px;
+            top: -80px;
+        }
+
+        .shape-red {
+            background-image: url('images/red.png'); /* Path to red image */
+            right: -300px;
+            bottom: -80px;
+        }
+
+        form {
+            background-color: rgba(255,255,255,0.13);
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top: 60%;
+            left: 50%;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 40px rgba(8,7,16,0.6);
+            padding: 50px 35px;
+            width: 400px;
+            max-width: 80%;
+        }
+
+        form * {
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            outline: none;
+            border: none;
+        }
+
+        form h3 {
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 42px;
+            text-align: center;
+        }
+
+        form h4 {
+            color: #ffffff;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 30px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        input {
+            display: block;
+            height: 50px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.07);
+            border-radius: 3px;
+            padding: 0 10px;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 300;
+        }
+
+        ::placeholder {
+            color: #e5e5e5;
+        }
+
+        button {
+            margin-top: 30px;
+            width: 100%;
+            background-color: #ffffff;
+            color: #080710;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .back-to-register {
+            display: block;
+            width: 100%;
+            background-color: #67a9c5;
+            color: #ffffff;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="shape shape-blue"></div>
+        <div class="shape shape-red"></div>
+    </div>
+    <form id="forgotForm" action="forgot.php" method="post">
+        <h3>Forgot Password</h3>
+        <h4>Please enter your email and new password</h4>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
+
+        <label for="newPassword">New Password</label>
+        <div style="position: relative;">
+            <input type="password" id="newPassword" name="newPassword" placeholder="New Password" required>
+            <span class="toggle-password" onclick="togglePasswordVisibility('newPassword')">
+                <i class="fas fa-eye-slash"></i>
+            </span>
+        </div>
+
+        <label for="confirmNewPassword">Confirm New Password</label>
+        <div style="position: relative;">
+            <input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm New Password" required>
+            <span class="toggle-password" onclick="togglePasswordVisibility('confirmNewPassword')">
+                <i class="fas fa-eye-slash"></i>
+            </span>
+        </div>
+
+        <button type="submit">Reset Password</button>
+        <a href="register.html" class="back-to-register">Back to Register</a>
+    </form>
+
+    <!-- JavaScript -->
+    <script>
+        function togglePasswordVisibility(inputId) {
+            var passwordField = document.getElementById(inputId);
+            var icon = passwordField.nextElementSibling.querySelector("i");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            } else {
+                passwordField.type = "password";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            }
+        }
+    </script>
+</body>
+</html>

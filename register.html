@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wristwonders - Register</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/fevicon/fevicon.png" type="image/gif" />
+
+    <!-- Custom CSS -->
+    <style>
+        /* General Reset */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color:#000039;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .background {
+            position: absolute;
+            width: 430px;
+            height: 500px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .background .shape {
+            position: absolute;
+            border-radius: 50%;
+            background-size: cover;
+            width: 400px;
+            height: 400px;
+        }
+        
+        .shape-blue {
+            background-image: url('images/blue.png'); /* Path to blue image */
+            left: -300px;
+            top: -80px;
+        }
+        
+        .shape-red {
+            background-image: url('images/red.png'); /* Path to red image */
+            right: -300px;
+            bottom: -80px;
+        }
+        
+        form {
+            background-color: rgba(255,255,255,0.13);
+            position: absolute;
+            transform: translate(-50%,-50%);
+            top: 70%;
+            left: 50%;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 40px rgba(8,7,16,0.6);
+            padding: 50px 35px;
+            padding-top: 200px;
+        }
+        
+        form * {
+            font-family: 'Poppins',sans-serif;
+            color: #000000;
+            letter-spacing: 0.5px;
+            outline: none;
+            border: none;
+        }
+        
+        form h3 {
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 42px;
+            text-align: center;
+            color: #ffffff;
+        }
+        
+        form h4 {
+            color: #ffffff;
+        }
+        
+        label {
+            display: block;
+            margin-top: 30px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #ffffff;
+        }
+        
+        input, select {
+            display: block;
+            height: 50px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.07);
+            border-radius: 3px;
+            padding: 0 10px;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 300;
+            color: #ffffff;
+        }
+        
+        ::placeholder {
+            color: #e5e5e5;
+        }
+        
+        button {
+            margin-top: 50px;
+            width: 100%;
+            background-color: #ffffff;
+            color: #080710;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .forgot-password {
+    display: inline-block;
+    width: 100%;
+    background-color: #67a9c5;
+    color: #ffffff;
+    padding: 5px 0; /* Reduced padding to make it thinner */
+    font-size: 16px; /* Slightly reduced font size */
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+        
+        .social {
+            display: flex;
+            justify-content: center;
+            margin-top: -50px;
+        }
+        
+        .social div {
+            background-color: rgba(255, 255, 255, 0.27);
+            width: 150px;
+            border-radius: 3px;
+            padding: 5px 10px;
+            color: #eaf0fb;
+            text-align: center;
+            margin: 10px;
+            cursor: pointer;
+        }
+        
+        .social div:hover {
+            background-color: rgba(255, 255, 255, 0.47);
+        }
+        
+        .social i {
+            margin-right: 4px;
+        }
+        
+        .password-strength {
+            height: 10px;
+            margin-top: 5px;
+            border-radius: 3px;
+            background-color: transparent;
+        }
+        
+        .strength-weak {
+            width: 25%;
+            background-color: red;
+        }
+        
+        .strength-medium {
+            width: 50%;
+            background-color: orange;
+        }
+        
+        .strength-strong {
+            width: 75%;
+            background-color: yellow;
+        }
+        
+        .strength-very-strong {
+            width: 100%;
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+       <div class="shape shape-blue"></div>
+       <div class="shape shape-red"></div>
+    </div>
+    <form id="registerForm" action="register.php" method="post">
+       <h3>Welcome to <span style="color: #67a9c5;">Wristwonders</span>!</h3>
+        <h4>Join us to explore exclusive deals on our exquisite timepieces!</h4>
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Your Username" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
+
+        <label for="phoneNumber">Phone Number</label>
+        <div style="display: flex;">
+            <select id="countryCode" name="countryCode" style="width: 30%; color: #000;">
+                <option value="+06">+06 (Malaysia)</option>
+                <option value="+44">+44 (UK)</option>
+                <option value="+91">+91 (India)</option>
+                <option value="+1">+1 (USA)</option>
+                
+                <!-- Add more options as needed -->
+            </select>
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Your Phone Number" style="width: 70%;" required>
+        </div>
+
+        <label for="newPassword">New Password</label>
+        <div style="position: relative;">
+            <input type="password" id="newPassword" name="newPassword" placeholder="New Password" required>
+            <span class="toggle-password" onclick="togglePasswordVisibility('newPassword')">
+                <i class="fas fa-eye-slash"></i>
+            </span>
+        </div>
+
+        <label for="confirmNewPassword">Confirm New Password</label>
+        <div style="position: relative;">
+            <input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm New Password" required>
+            <span class="toggle-password" onclick="togglePasswordVisibility('confirmNewPassword')">
+                <i class="fas fa-eye-slash"></i>
+            </span>
+        </div>
+
+        <button type="submit">Register</button>
+        <div class="forgot-password"><a href="forgot.html" class="forgot-password">Forgot Password?</a></div>
+        <div class="forgot-password"><a href="index.html" class="forgot-password">Log In</a></div>
+        <br><br>
+        
+    </form>
+
+    <!-- JavaScript -->
+    <script>
+        function showSuccessMessage() {
+            alert("You are registered successfully! Please log in.");
+            window.location.href = "index.html"; // Redirect to index.html after clicking OK
+        }
+    
+        function showErrorMessage(message) {
+            alert(message);
+        }
+    
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById("registerForm");
+            const passwordInput = document.getElementById("newPassword");
+            const strengthBar = document.getElementById("password-strength");
+            let strength = 0;
+    
+            passwordInput.addEventListener('input', function() {
+                const password = passwordInput.value;
+                strength = 0;
+    
+                if (password.length >= 8) strength++;
+                if (password.match(/[a-z]+/)) strength++;
+                if (password.match(/[A-Z]+/)) strength++;
+                if (password.match(/[0-9]+/)) strength++;
+                if (password.match(/[$@#&!]+/)) strength++;
+    
+                switch(strength) {
+                    case 1:
+                        strengthBar.className = 'password-strength strength-weak';
+                        break;
+                    case 2:
+                        strength
+                        strengthBar.className = 'password-strength strength-weak';
+                        break;
+                    case 2:
+                        strengthBar.className = 'password-strength strength-medium';
+                        break;
+                    case 3:
+                        strengthBar.className = 'password-strength strength-strong';
+                        break;
+                    case 4:
+                    case 5:
+                        strengthBar.className = 'password-strength strength-very-strong';
+                        break;
+                    default:
+                        strengthBar.className = 'password-strength';
+                        break;
+                }
+            });
+    
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form submission
+    
+                const password = passwordInput.value;
+                const confirmPassword = document.getElementById("confirmNewPassword").value;
+    
+                if (password !== confirmPassword) {
+                    showErrorMessage("Passwords do not match.");
+                    return;
+                }
+    
+                const formData = new FormData(form);
+                const requestOptions = {
+                    method: 'POST',
+                    body: formData
+                };
+    
+                fetch('register.php', requestOptions)
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data.trim() === 'registered') {
+                            showSuccessMessage();
+                        } else if (data.trim() === 'exists') {
+                            showErrorMessage("Email already exists.");
+                        } else {
+                            showErrorMessage("An error occurred during registration.");
+                        }
+                    })
+                    .catch(error => {
+                        showErrorMessage("An error occurred: " + error.message);
+                    });
+            });
+        });
+    
+        function togglePasswordVisibility(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const icon = passwordInput.nextElementSibling.querySelector('i');
+    
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = "password";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        }
+    </script>
+</body>
+</html>

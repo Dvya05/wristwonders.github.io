@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="icon" href="images/fevicon/fevicon.png" type="image/gif" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .navbar {
+            display: flex;
+            background-color: #000039;
+            overflow: hidden;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0 20px;
+        }
+        .navbar a {
+            flex: 1;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .navbar .cart-icon {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .navbar .cart-icon img {
+            height: 24px;
+            width: 24px;
+        }
+        .navbar .cart-count {
+            position: absolute;
+            top: 16px;
+            right: 6px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .button {
+            background-color: #000039; /* Updated color */
+            color: white;
+            border: none;
+            padding: 10px 20px; /* Adjusted padding */
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+        .button:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .cart-items {
+            margin-bottom: 20px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+        .cart-item .quantity {
+            margin: 0 10px;
+        }
+        .button-group {
+            display: flex;
+            align-items: center;
+        }
+        .button-group .button {
+            margin-left: 5px;
+        }
+        .buttonlo {
+            background-color: #000039; /* Updated color */
+            color: white;
+            border: none;
+            padding: 10px 20px; /* Adjusted padding */
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .buttonlo:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .button a.nav-link {
+            display: block;
+            padding: 14px 20px;
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        .button a.nav-link:hover {
+            color: black;
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content">
+    <h1>Shopping Cart</h1>
+    <div class="cart-items" id="cart-items">
+        <!-- Cart items will be dynamically added here -->
+    </div>
+    <p id="cart-total">Total: MYR 0</p>
+    <button class="button" id="buy-now" onclick="window.location.href = 'payment.html';">Payment</button>
+    <button class="button" onclick="continueShopping()">Continue Shopping</button>
+    <button class="buttonlo" id="logout-link">
+        Log Out
+    </button>
+    
+</div>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const cartItemsElement = document.getElementById('cart-items');
+    const cartTotalElement = document.getElementById('cart-total');
+    const buyNowButton = document.getElementById('buy-now');
+
+    function displayCart() {
+        cartItemsElement.innerHTML = '';
+        let total = 0;
+        cart.forEach(cartItem => {
+            const listItem = document.createElement('div');
+            listItem.classList.add('cart-item');
+            listItem.innerHTML = `
+                <span>${cartItem.item} - MYR ${cartItem.price}</span>
+                <div class="button-group">
+                    <button class="button decrease-quantity" data-item="${cartItem.item}">-</button>
+                    <span class="quantity">${cartItem.quantity}</span>
+                    <button class="button increase-quantity" data-item="${cartItem.item}">+</button>
+                </div>
+            `;
+            cartItemsElement.appendChild(listItem);
+            total += cartItem.price * cartItem.quantity;
+        });
+        cartTotalElement.textContent = `Total: MYR ${total.toFixed(2)}`;
+        // Store total in localStorage for payment.html access
+        localStorage.setItem('cartTotal', total.toFixed(2));
+    }
+
+    function updateCart(item, price) {
+        const existingItem = cart.find(i => i.item === item);
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            cart.push({ item, price, quantity: 1 });
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        displayCart();
+        updateCartCount();
+    }
+
+    function updateCartCount() {
+        const cartCountElement = document.getElementById('cart-count');
+        let count = 0;
+        cart.forEach(cartItem => {
+            count += cartItem.quantity;
+        });
+        cartCountElement.textContent = count;
+    }
+
+    function continueShopping() {
+        window.location.href = 'product.html'; 
+    }
+
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('decrease-quantity')) {
+            const item = e.target.getAttribute('data-item');
+            decreaseQuantity(item);
+        } else if (e.target.classList.contains('increase-quantity')) {
+            const item = e.target.getAttribute('data-item');
+            increaseQuantity(item);
+        }
+    });
+
+    function decreaseQuantity(item) {
+        const cartItem = cart.find(i => i.item === item);
+        if (cartItem && cartItem.quantity > 0) {
+            cartItem.quantity--;
+            if (cartItem.quantity === 0) {
+                cart.splice(cart.indexOf(cartItem), 1);
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+            updateCartCount();
+        }
+    }
+
+    function increaseQuantity(item) {
+        const cartItem = cart.find(i => i.item === item);
+        if (cartItem) {
+            cartItem.quantity++;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+            updateCartCount();
+        }
+    }
+
+    displayCart(); // Display cart on page load
+
+    // Function to clear local storage on logout
+    function clearLocalStorage() {
+      localStorage.clear();
+    }
+
+    // Add event listener to the logout link
+    document.getElementById('logout-link').addEventListener('click', clearLocalStorage);
+
+    document.getElementById('logout-link').addEventListener('click', function() {
+    localStorage.clear(); // Clear local storage on logout
+    window.location.href = 'index.html'; // Redirect to login page
+});
+
+</script>
+
+</body>
+</html>
